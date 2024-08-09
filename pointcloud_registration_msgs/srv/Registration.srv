@@ -13,4 +13,4 @@ float64 clip_distance_threshold
 # Two 3D points defining the top and bottom most corners to crop out
 geometry_msgs/Point[] crop_corner 
 ---
-geometry_msgs/TransformStamped header
+geometry_msgs/TransformStamped transform
