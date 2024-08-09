@@ -1,0 +1,16 @@
+# Reference Name for this pointcloud
+std_msgs/String name
+
+# Pointcloud
+sensor_msgs/PointCloud2 pointcloud
+
+# Initial Transform of the pointcloud before registration
+geometry_msgs/TransformStamped initial_transform
+
+# Clip distance threshold before applying ICP
+float64 clip_distance_threshold
+
+# Two 3D points defining the top and bottom most corners to crop out
+geometry_msgs/Point[] crop_corner 
+---
+geometry_msgs/TransformStamped header
