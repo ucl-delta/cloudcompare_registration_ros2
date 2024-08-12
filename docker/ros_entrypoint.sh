@@ -1,11 +1,18 @@
 #!/bin/bash
 set -e
 
-# Creates User for Shared Memory Transport
-id -u ros &>/dev/null || adduser --quiet --disabled-password --gecos '' --uid ${UID:=1000} ros
+# Create User for Shared Memory Transport
+if ! id -u ros &>/dev/null; then
+    useradd --uid ${UID:=1000} --create-home --shell /bin/bash ros
+    chown -R ros:ros /ros2_ws
+    echo "Created new user 'ros' and changed ownership of ros2_ws"
+fi
 
-source /setup_cloudcompy310.sh
+
+# source /setup_cloudcompy310.sh
 
 # setup ros2 environment
 source "/opt/ros/$ROS_DISTRO/setup.bash" --
-exec "$@"
+
+# Execute the command as the `ros` user
+exec su ros -c "$@"

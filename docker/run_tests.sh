@@ -12,4 +12,9 @@ source "/ros2_ws/install/setup.bash"
     ./run_cloudcompare.sh > /dev/null 2>&1 
 )
 
-ros2 run ros2_livox_cloudcompare ros2_livox_cloudcompare
+cd /ros2_ws
+
+colcon test --packages-select ros2_livox_cloudcompare \
+            --event-handlers console_cohesion+  \
+            --pytest-args \
+            -k test_cc_srv

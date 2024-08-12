@@ -13,4 +13,8 @@ float64 clip_distance_threshold
 # Two 3D points defining the top and bottom most corners to crop out
 geometry_msgs/Point[] crop_corner 
 ---
+# Returns a code to show if it worked
+uint32 return_code
+
+# Returns the transform of the object if successful
 geometry_msgs/TransformStamped transform

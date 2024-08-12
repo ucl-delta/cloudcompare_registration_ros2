@@ -52,7 +52,9 @@ FROM ros:humble-ros-core AS main
 COPY --from=cc_base /opt/installConda/CloudComPy310 /CloudComPy 
 
 RUN apt-get update -y && apt-get install -y \
-        wget libgl-dev xvfb x11-apps python3-colcon-common-extensions\
+        wget libgl-dev xvfb x11-apps \
+        python3-colcon-common-extensions build-essential \
+        ros-humble-sensor-msgs-py \
     && rm -rf /var/lib/apt/lists/* 
 
 RUN wget -O Miniforge3.sh "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh" && \
@@ -64,21 +66,15 @@ RUN wget -O Miniforge3.sh "https://github.com/conda-forge/miniforge/releases/lat
     mamba install -y "boost=1.74" "cgal=5.4" draco ffmpeg "gdal=3.5" laszip "matplotlib=3.5" "mysql=8.0" "numpy=1.22" "opencv=4.5" "openmp=8.0" "pcl=1.12" "pdal=2.4" "psutil=5.9" pybind11 quaternion "qhull=2020.2" "qt=5.15.4" "scipy=1.8" sphinx_rtd_theme tbb tbb-devel "xerces-c=3.2"
 
 ENV DISPLAY=:0
-
-COPY docker/setup_cloudcompy310.sh /
 COPY docker/setup_cloudcompy310.sh /
 COPY docker/ros_entrypoint.sh /
 COPY ros2_livox_cloudcompare /ros2_ws/src/ros2_livox_cloudcompare
 COPY pointcloud_registration_msgs /ros2_ws/src/pointcloud_registration_msgs
 
-RUN apt-get update -y && apt-get install -y \
-        build-essential \
-    && rm -rf /var/lib/apt/lists/* 
-
 RUN . /opt/ros/${ROS_DISTRO}/setup.sh \
     && cd ros2_ws \
     && colcon build --symlink-install 
 
-COPY docker/run.sh /
+COPY docker/run* /
 
-CMD ["bash", "-c", "su ros -c /run.sh"]
+CMD ["/run.sh"]
