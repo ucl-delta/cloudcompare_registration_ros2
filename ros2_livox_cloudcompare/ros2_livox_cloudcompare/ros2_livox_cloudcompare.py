@@ -20,7 +20,10 @@ class CloudCompareLivox(Node):
         self.declare_parameter("PC_FILE", "/Datasets/G40_Poincloud_Tiny.las")
         self.declare_parameter("ICP_overlap_ratio", 0.1)
 
-        self.cloud=None
+        
+        pc_file = self.get_parameter("PC_FILE").value
+        self.cloud = cc.loadPointCloud(pc_file)
+
         self.srv = self.create_service(Registration, 'register', self.register_cb)
 
     # Registration.srv:
@@ -31,9 +34,6 @@ class CloudCompareLivox(Node):
     def register_cb(self, request, response):
         sensor_name = request.name
         self.get_logger().info(f'Incoming request to register {sensor_name}')
-
-        pc_file = self.get_parameter("PC_FILE").value
-        self.cloud = cc.loadPointCloud(pc_file)
 
         # Transform into a cloudcompare pointcloud
         pc_msg = request.pointcloud
@@ -63,9 +63,6 @@ class CloudCompareLivox(Node):
         response.transform = self.ccGLMatrix_to_transform(res.transMat)
         response.transform.header = init_transf.header
         response.transform.child_frame_id = init_transf.child_frame_id
-
-        del self.cloud
-        self.cloud = None
 
         return response
     
@@ -143,7 +140,6 @@ class CloudCompareLivox(Node):
                 cc_pc = res_pc
             else:
                 self.get_logger().warn(f"Cropping Pointcloud, Ortho {i} returned Empty")
-
         return cc_pc
 
     def ccGLMatrix_to_transform(self, glMat):
