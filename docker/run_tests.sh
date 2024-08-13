@@ -16,5 +16,5 @@ cd /ros2_ws
 
 colcon test --packages-select ros2_livox_cloudcompare \
             --event-handlers console_cohesion+  \
-            --pytest-args \
+            --pytest-args -r "fEp" \
             -k test_cc_srv

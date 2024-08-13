@@ -9,3 +9,5 @@ This project is used for communicating with cloudcompare
 
 Since the setup is a bit challenging, we take the docker container build method and transfer it over into this repository. 
 This docker container acts as a first stage for the ros2 node we intend to build. 
+
+Note that the dockerfile actually utilises this repo: https://gitlab.com/openfields1/CloudComPy with the branch set to CloudComPy_docker-20230216. Therefore not all of the latest API exists. 

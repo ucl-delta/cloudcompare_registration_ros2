@@ -1,5 +1,5 @@
 # Reference Name for this pointcloud
-std_msgs/String name
+string name
 
 # Pointcloud
 sensor_msgs/PointCloud2 pointcloud

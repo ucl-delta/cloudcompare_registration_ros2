@@ -10,19 +10,17 @@ from geometry_msgs.msg import TransformStamped
 
 import cloudComPy as cc               # import the CloudComPy module
 import numpy as np
+import transforms3d as tf3d
 
 class CloudCompareLivox(Node):
 
     def __init__(self):
         super().__init__('CloudCompareRegistration')
-        # self.publisher_ = self.create_publisher(String, 'topic', 10)
-        # timer_period = 0.5  # seconds
-        # self.timer = self.create_timer(timer_period, self.timer_callback)
-        # self.i = 0
 
-        pc_file = "/Datasets/G40_Poincloud_Tiny.las"
-        self.cloud = cc.loadPointCloud(pc_file)
+        self.declare_parameter("PC_FILE", "/Datasets/G40_Poincloud_Tiny.las")
+        self.declare_parameter("ICP_overlap_ratio", 0.1)
 
+        self.cloud=None
         self.srv = self.create_service(Registration, 'register', self.register_cb)
 
     # Registration.srv:
@@ -32,7 +30,10 @@ class CloudCompareLivox(Node):
     # geometry_msgs/TransformStamped header
     def register_cb(self, request, response):
         sensor_name = request.name
-        self.get_logger().info(f'Incoming request to reguster {sensor_name}')
+        self.get_logger().info(f'Incoming request to register {sensor_name}')
+
+        pc_file = self.get_parameter("PC_FILE").value
+        self.cloud = cc.loadPointCloud(pc_file)
 
         # Transform into a cloudcompare pointcloud
         pc_msg = request.pointcloud
@@ -50,11 +51,21 @@ class CloudCompareLivox(Node):
 
         # Perform ICP (Using CC ICP)
         # https://www.simulation.openfields.fr/documentation/CloudComPy/html/userUseCases.html#cloud-registration
-        res=cc.ICP(data=cc_pc, model=self.cloud, finalOverlapRatio=0.1)
+        res=cc.ICP(data=cc_pc, model=self.cloud,
+                    minRMSDecrease=1.e-5, maxIterationCount=20,         # defaults
+                    removeFarthestPoints=False,                         # defaults
+                    method=cc.CONVERGENCE_TYPE.MAX_ITER_CONVERGENCE,    # defaults
+                    adjustScale=False,                                  # defaults
+                    finalOverlapRatio = self.get_parameter("ICP_overlap_ratio").value,
+                    randomSamplingLimit = 100000) 
 
         # Change transform back into ROS2
         response.transform = self.ccGLMatrix_to_transform(res.transMat)
         response.transform.header = init_transf.header
+        response.transform.child_frame_id = init_transf.child_frame_id
+
+        del self.cloud
+        self.cloud = None
 
         return response
     
@@ -63,17 +74,23 @@ class CloudCompareLivox(Node):
         points = pc2.read_points(pointcloud2_msg, skip_nans=True)
         
         # Convert the generator to a list and then to a NumPy array
-        xyz_array = np.array(list(points), dtype=np.float32)
+        xyz_array = np.array([(p[0], p[1], p[2]) for p in points], dtype=np.float32)
 
         # Create a point cloud object in cloudcompare-py
-        cc_pc = cc.PointCloud(pc_name)
+        cc_pc = cc.ccPointCloud(pc_name)
         cc_pc.coordsFromNPArray_copy(xyz_array[:, :3])
 
         # Apply Initial Transformation
-        tf = init_transform.trasform
-        quat = np.array([tf.rotation.x, tf.rotation.y, tf.rotation.z, tf.rotation.w])
-        trans = np.array([tf.position.x, tf.position.y, tf.position.z])
-        transform = cc.ccGLMatrix.FromQuaternionAndTranslation(quat, trans)
+        tf = init_transform.transform
+        quaternion = [tf.rotation.x, tf.rotation.y, tf.rotation.z, tf.rotation.w]
+        rotmat = tf3d.quaternions.quat2mat(quaternion)
+        depl = (tf.translation.x, tf.translation.y, tf.translation.z)
+
+        # transform = cc.ccGLMatrix.FromQuaternionAndTranslation(quaternion, depl) # <- doesnt seem to work? not found.
+        transform = cc.ccGLMatrix(tuple(rotmat[0,:]), 
+                                  tuple(rotmat[1,:]), 
+                                  tuple(rotmat[2,:]), 
+                                  depl)
         cc_pc.applyRigidTransformation(transform)
 
         return cc_pc
@@ -87,11 +104,12 @@ class CloudCompareLivox(Node):
         params = cc.Cloud2CloudDistancesComputationParams()
         params.maxThreadCount = nbCpu
         params.octreeLevel = bestOctreeLevel
-        cc.DistanceComputationTools.computeCloud2CloudDistances(self.cloud, cc_pc, params)
+        res = cc.DistanceComputationTools.computeCloud2CloudDistances(cc_pc, self.cloud, params)
         # This should generate a scalar field with the distances
 
         # Now filter by scalar fields
         nsf = cc_pc.getNumberOfScalarFields()
+        self.get_logger().info(f"Num Scalar Feilds: {nsf}")
         sfc = cc_pc.getScalarField(nsf - 1)
         cc_pc.setCurrentOutScalarField(nsf - 1)
         fcloud = cc.filterBySFValue(threshold, sfc.getMax(), cc_pc) # Original threshold is 0.01 for the example
@@ -114,29 +132,35 @@ class CloudCompareLivox(Node):
             [mxpt.x, mxpt.y, mxpt.z],  # Top-back-right
             [mnpt.x, mxpt.y, mxpt.z],  # Top-back-left
         ])
-        cut_polyline = cc.ccPolyline(polyline_pts)
+        temppc = cc.ccPointCloud()
+        temppc.coordsFromNPArray_copy(polyline_pts)
+        cut_polyline = cc.ccPolyline(temppc)
         cut_polyline.setClosed(True)
 
-        cc_pc = cc_pc.crop2D(cut_polyline, 0, True)
-        cc_pc = cc_pc.crop2D(cut_polyline, 1, True)
-        cc_pc = cc_pc.crop2D(cut_polyline, 2, True)
+        for i in range(3):
+            res_pc = cc_pc.crop2D(cut_polyline, i, True)
+            if res_pc is not None:
+                cc_pc = res_pc
+            else:
+                self.get_logger().warn(f"Cropping Pointcloud, Ortho {i} returned Empty")
 
         return cc_pc
 
     def ccGLMatrix_to_transform(self, glMat):
-        quat = glMat.toQuaternion()
-        trans = glMat.data()[12:15] 
+        
+        mat = np.array(glMat.data()).reshape(4,4)
+        quat = tf3d.quaternions.mat2quat(mat[:3, :3])
+        trans = mat[3,:3] 
 
         tf = TransformStamped()
-        # tf.header.
         tf.transform.rotation.x = quat[0]
         tf.transform.rotation.y = quat[1]
         tf.transform.rotation.z = quat[2]
-        tf.transform.rotation.q = quat[3]
+        tf.transform.rotation.w = quat[3]
 
-        tf.transform.position.x = trans[0]
-        tf.transform.position.y = trans[1]
-        tf.transform.position.z = trans[2]
+        tf.transform.translation.x = trans[0]
+        tf.transform.translation.y = trans[1]
+        tf.transform.translation.z = trans[2]
 
         return tf
 

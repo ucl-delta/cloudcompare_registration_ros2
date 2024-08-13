@@ -55,6 +55,7 @@ RUN apt-get update -y && apt-get install -y \
         wget libgl-dev xvfb x11-apps \
         python3-colcon-common-extensions build-essential \
         ros-humble-sensor-msgs-py \
+        python3-transforms3d \
     && rm -rf /var/lib/apt/lists/* 
 
 RUN wget -O Miniforge3.sh "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh" && \

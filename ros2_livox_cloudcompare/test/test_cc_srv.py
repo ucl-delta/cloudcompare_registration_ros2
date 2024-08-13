@@ -37,6 +37,7 @@ import sensor_msgs_py.point_cloud2 as pc2
 from pointcloud_registration_msgs.srv import Registration
 from sensor_msgs.msg import PointCloud2, PointField
 from std_msgs.msg import Header
+from geometry_msgs.msg import Point
 
 @pytest.mark.rostest
 def generate_test_description():
@@ -93,7 +94,7 @@ class TestCCService(unittest.TestCase):
 
         # Create a header
         header = Header()
-        header.stamp = self.node.get_clock().now()
+        header.stamp = self.node.get_clock().now().to_msg()
         header.frame_id = frame_id
 
         # Define the fields for PointCloud2 (x, y, z)
@@ -108,7 +109,7 @@ class TestCCService(unittest.TestCase):
 
         return pointcloud2_msg
 
-    def test_cc_send_request(self,
+    def test_cc_send_request1(self,
                             launch_service: LaunchService,
                             cc_node: Node,
                             proc_output: ActiveIoHandler
@@ -127,9 +128,12 @@ class TestCCService(unittest.TestCase):
         # Create a Random Pointcloud
         request.name = "test_pointcloud"
         request.pointcloud = self.create_random_pointcloud2(frame_id="lidar")
+        request.initial_transform.header.frame_id = "map"
+        request.initial_transform.child_frame_id = "lidar"
+        request.clip_distance_threshold = 0.3
 
         try:
-            
+
             # Send the request
             future = client.call_async(request)
 
@@ -140,7 +144,70 @@ class TestCCService(unittest.TestCase):
             if future.result() is not None:
                 response = future.result()
                 print("Received response:", response)
-                self.assertTrue(True)
+                self.assertEqual(
+                    response.transform.header.frame_id,
+                    request.initial_transform.header.frame_id, 
+                    "Frame IDs do not match")
+                self.assertEqual(
+                    response.transform.child_frame_id,
+                    request.initial_transform.child_frame_id,
+                    "Child Frame IDs do not match")
+            else:
+                self.fail("Failed to receive a response.")
+        
+        finally:
+            self.node.destroy_client(client)
+    
+    def test_cc_send_request2(self,
+                            launch_service: LaunchService,
+                            cc_node: Node,
+                            proc_output: ActiveIoHandler
+                            ):
+        
+        # Create a client for the service
+        client = self.node.create_client(Registration, 'register')
+
+        # Wait for the service to be available
+        if not client.wait_for_service(timeout_sec=5.0):
+            self.fail("Service 'register' not available.")
+
+        # Create a request object
+        request = Registration.Request()
+
+        # Create a Random Pointcloud
+        request.name = "test_pointcloud"
+        request.pointcloud = self.create_random_pointcloud2(frame_id="lidar")
+        request.initial_transform.header.frame_id = "map"
+        request.initial_transform.child_frame_id = "lidar"
+        request.clip_distance_threshold = 0.3
+
+        for i in [-1.0, 1.0]:
+            spoint = Point()
+            spoint.x = i * 5.0
+            spoint.y = i * 5.0
+            spoint.z = i * 5.0
+            request.crop_corner.append(spoint)
+
+        try:
+
+            # Send the request
+            future = client.call_async(request)
+
+            # Wait for the result
+            rclpy.spin_until_future_complete(self.node, future, timeout_sec=5.0)
+
+            # Test succeeds if a response is received
+            if future.result() is not None:
+                response = future.result()
+                print("Received response:", response)
+                self.assertEqual(
+                    response.transform.header.frame_id,
+                    request.initial_transform.header.frame_id, 
+                    "Frame IDs do not match")
+                self.assertEqual(
+                    response.transform.child_frame_id,
+                    request.initial_transform.child_frame_id,
+                    "Child Frame IDs do not match")
             else:
                 self.fail("Failed to receive a response.")
         
