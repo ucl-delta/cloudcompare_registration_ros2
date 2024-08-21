@@ -1,0 +1,159 @@
+C:\Users\ucesjo0\Documents\Delta\commandline>"c:\Program Files\CloudCompare\CloudCompare.exe" -VERBOSITY 0 -SILENT -COMMAND_FILE command.txt
+
+C:\Users\ucesjo0\Documents\Delta\commandline>[13:51:43] [ccColorScalesManager] Found 0 custom scale(s) in persistent settings
+[13:51:43] [Plugin] Searching: c:/Program Files/CloudCompare/plugins
+[13:51:43] [MeshIO] Using Assimp 5.4 (10df90ec-HEAD)
+[13:51:43]      Plugin found: Mesh I/O (MeshIO.dll)
+[13:51:43] [PythonRuntime] Initializing the interpreter with: PythonConfig { type: Unknown, home: 'c:/Program Files/CloudCompare/plugins/Python', path: 'c:/Program Files/CloudCompare/plugins/Python/DLLs;c:/Program Files/CloudCompare/plugins/Python/lib;c:/Program Files/CloudCompare/plugins/Python/Lib/site-packages;;c:/Program Files/CloudCompare/plugins/Python/Lib/site-packages'}
+[13:51:43]      Plugin found: Python Plugin (PythonRuntime.dll)
+[13:51:43]      Plugin found: 3DMASC (Q3DMASC_PLUGIN.dll)
+[13:51:43]      Plugin found: Additional I/O (QADDITIONAL_IO_PLUGIN.dll)
+[13:51:43]      Plugin found: Animation (QANIMATION_PLUGIN.dll)
+[13:51:43]      Plugin found: AutoSeg (QAUTO_SEG_PLUGIN.dll)
+[13:51:43]      Plugin found: CEA Virtual Broom (QBROOM_PLUGIN.dll)
+[13:51:43]      Plugin found: CANUPO (QCANUPO_PLUGIN.dll)
+[13:51:43]      Plugin found: Cloud layers (QCLOUDLAYERS_PLUGIN.dll)
+[13:51:43]      Plugin found: Colorimetric Segmenter (QCOLORIMETRIC_SEGMENTER_PLUGIN.dll)
+[13:51:43]      Plugin found: Compass (QCOMPASS_PLUGIN.dll)
+[13:51:43]      Plugin found: Core I/O (QCORE_IO_PLUGIN.dll)
+[13:51:43]      Plugin found: Cork (QCORK_PLUGIN.dll)
+[13:51:43]      Plugin found: CSF Filter (QCSF_PLUGIN.dll)
+[13:51:43]      Plugin found: CSV Matrix I/O (QCSV_MATRIX_IO_PLUGIN.dll)
+[13:51:43]      Plugin found: DP (QDOT_PRODUCT_IO_PLUGIN.dll)
+[13:51:43]      Plugin found: Draco (QDRACO_IO_PLUGIN.dll)
+[13:51:43]      Plugin found: E57 (QE57_IO_PLUGIN.dll)
+[13:51:43]      Plugin found: EDL Shader (QEDL_GL_PLUGIN.dll)
+[13:51:43]      Plugin found: ELlipser (QELLIPSER_PLUGIN.dll)
+[13:51:43]      Plugin found: Facet/fracture detection (QFACETS_PLUGIN.dll)
+[13:51:43]      Plugin found: FBX (QFBX_IO_PLUGIN.dll)
+[13:51:43]      Plugin found: Hough Normals Computation (QHOUGH_NORMALS_PLUGIN.dll)
+[13:51:43]      Plugin found: Hidden Point Removal (QHPR_PLUGIN.dll)
+[13:51:43]      Plugin found: Json RPC (Standard Plugin) (QJSON_RPC_PLUGIN.dll)
+[13:51:43]      Plugin found: LAS (I/O Plugin) (QLAS_IO_PLUGIN.dll)
+[13:51:43]      Plugin found: M3C2 Distance (QM3C2_PLUGIN.dll)
+[13:51:43]      Plugin found: ManualSeg (QMANUAL_SEG_PLUGIN.dll)
+[13:51:43]      Plugin found: Mesh Boolean (QMESH_BOOLEAN_PLUGIN.dll)
+[13:51:43]      Plugin found: MPlane (QMPLANE_PLUGIN.dll)
+[13:51:43]      Plugin found: PCD file I/O (QPCL_IO_PLUGIN.dll)
+[13:51:43]      Plugin found: PCL wrapper (QPCL_PLUGIN.dll)
+[13:51:43]      Plugin found: PCV / ShadeVis (QPCV_PLUGIN.dll)
+[13:51:43]      Plugin found: Photoscan I/O (QPHOTOSCAN_IO_PLUGIN.dll)
+[13:51:43]      Plugin found: PoissonRecon (QPOISSON_RECON_PLUGIN.dll)
+[13:51:43]      Plugin found: RANSAC Shape Detection (QRANSAC_SD_PLUGIN.dll)
+[13:51:43]      Plugin found: RDB2 (I/O Plugin) (QRDB_IO_PLUGIN.dll)
+[13:51:43]      Plugin found: Riegl RDB I/O (QRIEGL_IO_PLUGIN.dll)
+[13:51:43]      Plugin found: Surface of Revolution Analysis (QSRA_PLUGIN.dll)
+[13:51:43]      Plugin found: SSAO Shader (QSSAO_GL_PLUGIN.dll)
+[13:51:43]      Plugin found: Step file loader (I/O plugin) (QSTEP_IO_PLUGIN.dll)
+[13:51:43]      Plugin found: TreeIso (QTREEISO_PLUGIN.dll)
+[13:51:43] [Plugin] Searching: C:/Users/ucesjo0/AppData/Roaming/CCCorp/CloudCompare/plugins
+[13:51:43] [Plugin] Searching: C:/ProgramData/CCCorp/CloudCompare/plugins
+[13:51:43] [Plugin] Searching: c:/Program Files/CloudCompare/data/plugins
+[13:51:43] [Plugin] Searching: c:/Program Files/CloudCompare/data/CCCorp/CloudCompare/plugins
+[13:51:43] [Plugin][Mesh I/O] New file extensions registered: DAE GLTF IFC
+[13:51:43] [Plugin][Additional I/O] New file extensions registered: ICM OUT PN POLY POV PV SOI SX
+[13:51:43] [Plugin][Core I/O] New file extensions registered:  GEOREF MA OBJ OFF PDMS PTX SBF STL VTK
+[13:51:43] [Plugin][CSV Matrix I/O] New file extensions registered: CSV
+[13:51:43] [Plugin][DP] New file extensions registered: DP
+[13:51:43] [Plugin][Draco] New file extensions registered: DRC
+[13:51:43] [Plugin][E57] New file extensions registered: E57
+[13:51:43] [Plugin][FBX] New file extensions registered: FBX
+[13:51:43] [Plugin][LAS (I/O Plugin)] New file extensions registered: LAS
+[13:51:43] [Plugin][PCD file I/O] New file extensions registered: PCD
+[13:51:43] [Plugin][Photoscan I/O] New file extensions registered: PSZ
+[13:51:43] [Plugin][RDB2 (I/O Plugin)] New file extensions registered: RDB2
+[13:51:43] [Plugin][Riegl RDB I/O] New file extensions registered: RDS
+[13:51:43] [Plugin][Step file loader (I/O plugin)] New file extensions registered: STEP
+[13:51:43] [Global Shift] Max abs. coord = 1e+04 / max abs. diag = 1e+06
+[13:51:43] [LOAD COMMANDS FROM FILE]
+[13:51:43]      [0] -O
+[13:51:43]      [1] ..\003_rosbag2_new_livox_jul_2024_0.las
+[13:51:43]      [2] -APPLY_TRANS
+[13:51:43]      [3] 003_initial_transform.txt
+[13:51:43]      [4] -O
+[13:51:43]      [5] ..\G40_Poincloud_Medium.las
+[13:51:43]      [6] -C2C_DIST
+[13:51:43]      [7] -MAX_DIST
+[13:51:43]      [8] 0.11
+[13:51:43] [LOAD COMMANDS FROM FILE] finished in 0.01 s.
+[13:51:43] [LOAD]
+[13:51:43] Opening file: '..\003_rosbag2_new_livox_jul_2024_0.las'
+[13:51:43] [LAS] Time SF has been shifted to prevent a loss of accuracy (1720781842930909952.00)
+[13:51:44] [LAS] File loaded in 0m0s945ms
+[13:51:44] [I/O] File '..\003_rosbag2_new_livox_jul_2024_0.las' loaded successfully
+[13:51:44] Found one cloud with 8140032 points
+[13:51:44] [LOAD] finished in 0.95 s.
+[13:51:44] [APPLY TRANSFORMATION]
+[13:51:44] Transformation:
+-0.038859467953 0.998828709126 0.028829237446 15.703870773315
+0.986900866032 0.042884346098 -0.155523568392 20.102409362793
+-0.156577736139 0.022408034652 -0.987411499023 2.058743953705
+0.000000000000 0.000000000000 0.000000000000 1.000000000000
+[13:51:44] [SAVING]
+[13:51:44] [BIN] Output file version: 4.5 (automatically deduced from selected entities)
+[13:51:45] [I/O] File '../003_rosbag2_new_livox_jul_2024_0_TRANSFORMED_2024-08-21_13h51_44_803.bin' saved successfully
+[13:51:45] [APPLY TRANSFORMATION] finished in 0.57 s.
+[13:51:45] [LOAD]
+[13:51:45] Opening file: '..\G40_Poincloud_Medium.las'
+[13:51:45] [LAS] Extra Bytes: Name: 'NormalX', Type: f64 -> Size 8, Offset 0
+[13:51:45] [LAS] Extra Bytes: Name: 'NormalY', Type: f64 -> Size 8, Offset 8
+[13:51:45] [LAS] Extra Bytes: Name: 'NormalZ', Type: f64 -> Size 8, Offset 16
+[13:51:46] [LAS] File loaded in 0m1s126ms
+[13:51:46] [I/O] File '..\G40_Poincloud_Medium.las' loaded successfully
+[13:51:46] Found one cloud with 3557575 points
+[13:51:46] [LOAD] finished in 1.14 s.
+[13:51:46] [C2C DISTANCE]
+[13:51:47] [computeApproxDistances] Time: 1.08 s.
+[13:51:48] [Distances] Octree level (auto): 11
+[13:51:48] [Distances] Will use 10 threads
+[13:55:21] [ComputeDistances] Time: 213.21 s.
+[13:55:21] [ComputeDistances] Mean distance = 0.0710689 / std deviation = 0.0429374
+[13:55:21] [SAVING]
+[13:55:21] [BIN] Output file version: 4.5 (automatically deduced from selected entities)
+[13:55:21] [I/O] File '../003_rosbag2_new_livox_jul_2024_0_TRANSFORMED_C2C_DIST_MAX_DIST_0.11_2024-08-21_13h55_21_452.bin' saved successfully
+[13:55:21] [C2C DISTANCE] finished in 215.51 s.
+[13:55:21] Processed finished in 218.19 s.
+
+
+[14:08:21] [LOAD COMMANDS FROM FILE]
+[14:08:21]      [0] -O
+[14:08:21]      [1] ..\003_rosbag2_new_livox_jul_2024_0_TRANSFORMED_C2C_DIST_MAX_DIST_0.11_2024-08-21_13h55_21_452.bin
+[14:08:21]      [2] -FILTER_SF
+[14:08:21]      [3] 0
+[14:08:21]      [4] 0.1
+[14:08:21] [LOAD COMMANDS FROM FILE] finished in 0.00 s.
+[14:08:21] [LOAD]
+[14:08:21] Opening file: '..\003_rosbag2_new_livox_jul_2024_0_TRANSFORMED_C2C_DIST_MAX_DIST_0.11_2024-08-21_13h55_21_452.bin'
+[14:08:21] [BIN] Opening file '..\003_rosbag2_new_livox_jul_2024_0_TRANSFORMED_C2C_DIST_MAX_DIST_0.11_2024-08-21_13h55_21_452.bin'...
+[14:08:21] [BIN] Version 4.5 (coords: float / scalar: float)
+[14:08:21] [I/O] File '..\003_rosbag2_new_livox_jul_2024_0_TRANSFORMED_C2C_DIST_MAX_DIST_0.11_2024-08-21_13h55_21_452.bin' loaded successfully
+[14:08:21] Found one cloud with 8140032 points
+[14:08:21] [LOAD] finished in 0.17 s.
+[14:08:21] [FILTER BY SF VALUE]
+[14:08:21]      Interval: [0 - 0.1]
+[14:08:22]              Cloud '003_rosbag2_new_livox_jul_2024_0.las_TRANSFORMED' --> 3661768/8140032 points remaining
+[14:08:22] [SAVING]
+[14:08:22] [BIN] Output file version: 4.5 (automatically deduced from selected entities)
+[14:08:22] [I/O] File '../003_rosbag2_new_livox_jul_2024_0_TRANSFORMED_C2C_DIST_MAX_DIST_0.11_2024-08-21_13h55_21_452_FILTERED_[0_0.1]_2024-08-21_14h08_22_147.bin' saved successfully
+[14:08:22] [FILTER BY SF VALUE] finished in 0.76 s.
+
+[14:14:05] [LOAD]
+[14:14:05] Opening file: '..\G40_Poincloud_Medium.las'
+[14:14:05] [LAS] Extra Bytes: Name: 'NormalX', Type: f64 -> Size 8, Offset 0
+[14:14:05] [LAS] Extra Bytes: Name: 'NormalY', Type: f64 -> Size 8, Offset 8
+[14:14:05] [LAS] Extra Bytes: Name: 'NormalZ', Type: f64 -> Size 8, Offset 16
+[14:14:07] [LAS] File loaded in 0m1s6ms
+[14:14:07] [I/O] File '..\G40_Poincloud_Medium.las' loaded successfully
+[14:14:07] Found one cloud with 3557575 points
+[14:14:07] [LOAD] finished in 1.02 s.
+[14:14:07] [ICP]
+[14:14:07] [ICP] Will use 0 threads
+[14:14:08] Entity '003_rosbag2_new_livox_jul_2024_0.las_TRANSFORMED.extract' has been registered
+[14:14:08] RMS: 0.0456868
+[14:14:08] Number of points used for final step: 50000
+[14:14:08] [SAVING]
+[14:14:08] [BIN] Output file version: 4.5 (automatically deduced from selected entities)
+[14:14:09] [I/O] File '../003_rosbag2_new_livox_jul_2024_0_TRANSFORMED_C2C_DIST_MAX_DIST_0.11_2024-08-21_13h55_21_452_FILTERED_[0_0.1]_REGISTERED_2024-08-21_14h14_08_722.bin' saved successfully
+[14:14:09] [ICP] finished in 2.21 s.
+[
+
